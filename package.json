@@ -1,0 +1,13 @@
+{
+  "name": "ytyaCraftDiscordBot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/pmbstyle/ytyaCraftDiscordBot.git",
+  "author": "Slava Trofimov <my@pmb.link>",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "fs": "^0.0.1-security",
+    "rcon-client": "^4.2.3"
+  }
+}
