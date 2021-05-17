@@ -18,10 +18,20 @@ module.exports = {
             VIEW_CHANNEL: true,
         })
 
-        const reactionMessage = await channel.send("Спасибо, ваша заявка будет рассмотрена при первой возможности!");
+        const reactionMessage = await channel.send({embed: {
+            color: 3447003,
+            title: "Заявка на подключение",
+            fields: [{
+                name: "Ник игрока",
+                value: "```"+args[0]+"```"
+              }
+            ]
+          }
+        })
+        channel.send(`Спасибо, ваша заявка будет рассмотрена при первой возможности!\nЕсли у вас есть что добавить к заявке, вы можете это сделать в этом канале.`)
 
         try {
-            await reactionMessage.react("🔒")
+            await reactionMessage.react("✅")
             await reactionMessage.react("⛔")
         } catch (err) {
             channel.send("Error sending emojis!")
@@ -35,10 +45,15 @@ module.exports = {
 
         collector.on("collect", (reaction, user) => {
             switch (reaction.emoji.name) {
-                case "🔒":
-                    channel.updateOverwrite(message.author, { SEND_MESSAGES: false })
+                case "✅":
+                    channel.send("Заявка принята.")
+                    //TODO rcon whitelist add <player>
+                    channel.send("Вы можете подключиться прямо сейчас.")
+                    channel.send("Канал будет удален через 5 секунд!")
+                    setTimeout(() => channel.delete(), 5000)
                     break
                 case "⛔":
+                    channel.send("Заявка отклонена.")
                     channel.send("Канал будет удален через 5 секунд!")
                     setTimeout(() => channel.delete(), 5000)
                     break
