@@ -3,8 +3,10 @@ module.exports = {
     aliases: [],
     permissions: [],
     description: 'test server sign in functions',
-    async execute(message, args, cmd, client, discord) {
+    async execute(message, args, client) {
         const channel = await message.guild.channels.create(`Заявка: ${message.author.tag}`)
+
+        const userId = message.author.id
     
         channel.setParent("843937545116057620")
 
@@ -48,12 +50,13 @@ module.exports = {
                 case "✅":
                     channel.send("Заявка принята.")
                     //TODO rcon whitelist add <player>
-                    channel.send("Вы можете подключиться прямо сейчас.")
+                    client.users.cache.get(userId).send(`Ваша заявка на подключение к серверу ytyaCraft принята.\nВы можете подключиться прямо сейчас, ip: mc.ytyacraft.ru. Используйте ник из заявки.`)
                     channel.send("Канал будет удален через 5 секунд!")
                     setTimeout(() => channel.delete(), 5000)
                     break
                 case "⛔":
                     channel.send("Заявка отклонена.")
+                    client.users.cache.get(userId).send(`Ваша заявка на подключение к серверу ytyaCraft отклонена.`)
                     channel.send("Канал будет удален через 5 секунд!")
                     setTimeout(() => channel.delete(), 5000)
                     break

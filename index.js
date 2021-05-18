@@ -29,7 +29,7 @@ client.on('message', message => {
             client.commands.get('ping').execute(message, args)
             break
         case 'заявка':
-            client.commands.get('signin').execute(message, args)
+            client.commands.get('signin').execute(message, args, client)
             break
         default:
             break
