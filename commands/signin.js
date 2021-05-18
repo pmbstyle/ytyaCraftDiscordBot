@@ -50,6 +50,8 @@ module.exports = {
                 case "✅":
                     channel.send("Заявка принята.")
                     //TODO rcon whitelist add <player>
+                    let role = message.member.guild.roles.cache.find(role => role.name === "Tester")
+                    message.member.roles.add(role)
                     client.users.cache.get(userId).send(`Ваша заявка на подключение к серверу ytyaCraft принята.\nВы можете подключиться прямо сейчас, ip: mc.ytyacraft.ru. Используйте ник из заявки.`)
                     channel.send("Канал будет удален через 5 секунд!")
                     setTimeout(() => channel.delete(), 5000)
