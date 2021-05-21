@@ -8,7 +8,7 @@ module.exports = {
 
         const userId = message.author.id
     
-        channel.setParent("843937545116057620")
+        channel.setParent(process.env.SIGNIN_CATEGORY)
 
         channel.updateOverwrite(message.guild.id, {
             SEND_MESSAGE: false,
