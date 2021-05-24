@@ -1,7 +1,7 @@
 {
   "name": "ytyaCraftDiscordBot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.mjs",
   "repository": "https://github.com/pmbstyle/ytyaCraftDiscordBot.git",
   "author": "Slava Trofimov <my@pmb.link>",
   "license": "MIT",

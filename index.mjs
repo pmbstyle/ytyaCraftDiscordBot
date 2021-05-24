@@ -1,9 +1,14 @@
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
 const Discord = require('discord.js')
+import { Rcon } from "rcon-client"
 const fs = require('fs')
 require('dotenv').config()
 const mongoose = require('mongoose')
 
 const client = new Discord.Client()
+
+const rcon = new Rcon({ host: process.env.RPG_IP, port: process.env.RPG_PORT, password: process.env.RPG_PASSWORD })
 
 const prefix = '!'
 
@@ -19,6 +24,7 @@ for(const file of commandFiles){
 
 client.on('ready', () => {
 	console.log('Discord client is ready')
+    tryConnection()
 })
 
 client.on('message', message => {
@@ -38,7 +44,7 @@ client.on('message', message => {
 
     switch(command) {
         case 'заявка':
-            message.channel.id == process.env.WELCOME_CHANNEL ? client.commands.get('signin').execute(message, args, client) : message.reply('Неверная команда.')
+            message.channel.id == process.env.WELCOME_CHANNEL ? client.commands.get('signin').execute(message, args, client, rcon) : message.reply('Неверная команда.')
             break
         case 'поддержка':
             message.channel.id == process.env.SUPPORT_CHANNEL ? client.commands.get('support').execute(message, client) : message.reply('Неверная команда.')
@@ -61,3 +67,13 @@ mongoose.connect(process.env.MONGODB_SRV, {
     console.log('Alarm!')
     console.log(err)
 })
+
+async function tryConnection(){
+	try {
+		await rcon.connect()
+	}
+	catch(e){
+		console.log('RCON unavailable')
+	}
+	rcon.end()
+}

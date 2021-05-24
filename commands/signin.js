@@ -4,7 +4,7 @@ module.exports = {
     aliases: [],
     permissions: [],
     description: 'test server sign in functions',
-    async execute(message, args, client) {
+    async execute(message, args, client, rcon) {
 
         const userId = message.author.id
 
@@ -68,8 +68,12 @@ module.exports = {
         collector.on("collect", async (reaction, user) => {
             switch (reaction.emoji.name) {
                 case "✅":
+                    await rcon.connect()
+                    await rcon.send('whitelist add '+minecraftID).then(e => {
+                        console.log(e)
+                    })
+                    rcon.end()
                     channel.send("Заявка принята.")
-                    //TODO rcon whitelist add <player>
                     let role = message.member.guild.roles.cache.find(role => role.name === "Tester")
                     message.member.roles.add(role)
                     let profile = await profileModel.create({
