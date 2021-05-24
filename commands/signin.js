@@ -25,8 +25,6 @@ module.exports = {
         }
 
         const channel = await message.guild.channels.create(`Заявка: ${message.author.tag}`)
-
-        
     
         channel.setParent(process.env.SIGNIN_CATEGORY)
 
