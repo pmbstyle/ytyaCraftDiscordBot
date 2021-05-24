@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const fs = require('fs')
 require('dotenv').config()
+const mongoose = require('mongoose')
 
 const client = new Discord.Client()
 
@@ -15,8 +16,9 @@ for(const file of commandFiles){
     client.commands.set(command.name, command)
 }
 
+
 client.on('ready', () => {
-	console.log('Ready')
+	console.log('Discord client is ready')
 })
 
 client.on('message', message => {
@@ -48,3 +50,14 @@ client.on('message', message => {
 })
 
 client.login(process.env.TOKEN)
+
+mongoose.connect(process.env.MONGODB_SRV, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(()=> {
+    console.log('Connected to MongoDB')
+}).catch((err) => {
+    console.log('Alarm!')
+    console.log(err)
+})

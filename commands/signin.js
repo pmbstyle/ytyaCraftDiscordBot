@@ -1,12 +1,32 @@
+const profileModel = require('../models/profile')
 module.exports = {
     name: 'signin',
     aliases: [],
     permissions: [],
     description: 'test server sign in functions',
     async execute(message, args, client) {
-        const channel = await message.guild.channels.create(`Заявка: ${message.author.tag}`)
 
         const userId = message.author.id
+
+        const minecraftID = args[0]
+
+        let profileData
+        try {
+            profileData = await profileModel.findOne({minecraftID: minecraftID})
+            if(profileData) {
+                message.reply('Аккаунт с таким именем уже зарегистрирован.').then(msg => {
+                    setTimeout(() => message.delete(), 5000);
+                    setTimeout(() => msg.delete(), 5000);
+                })
+                return
+            }
+        } catch (err) {
+            console.log(err)
+        }
+
+        const channel = await message.guild.channels.create(`Заявка: ${message.author.tag}`)
+
+        
     
         channel.setParent(process.env.SIGNIN_CATEGORY)
 
@@ -45,13 +65,18 @@ module.exports = {
             { dispose: true }
         )
 
-        collector.on("collect", (reaction, user) => {
+        collector.on("collect", async (reaction, user) => {
             switch (reaction.emoji.name) {
                 case "✅":
                     channel.send("Заявка принята.")
                     //TODO rcon whitelist add <player>
                     let role = message.member.guild.roles.cache.find(role => role.name === "Tester")
                     message.member.roles.add(role)
+                    let profile = await profileModel.create({
+                        discordID:message.author.tag,
+                        minecraftID: minecraftID
+                    })
+                    profile.save()
                     client.users.cache.get(userId).send(`Ваша заявка на подключение к серверу ytyaCraft принята.\nВы можете подключиться прямо сейчас, ip: mc.ytyacraft.ru. Используйте ник из заявки.`)
                     channel.send("Канал будет удален через 5 секунд!")
                     setTimeout(() => channel.delete(), 5000)
@@ -74,5 +99,6 @@ module.exports = {
             .catch((err) => {
                 throw err;
             });
+        
   },
 }

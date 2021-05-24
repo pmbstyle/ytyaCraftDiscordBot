@@ -9,6 +9,7 @@
     "discord.js": "^12.5.3",
     "dotenv": "^9.0.2",
     "fs": "^0.0.1-security",
+    "mongoose": "^5.12.10",
     "rcon-client": "^4.2.3"
   }
 }
