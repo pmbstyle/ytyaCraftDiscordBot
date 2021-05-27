@@ -2,15 +2,14 @@ module.exports = {
     name: 'support',
     aliases: [],
     permissions: [],
-    description: 'test server support functions',
+    description: 'server support functions',
     async execute(message, client) {
-        console.log(1)
         const channel = await message.guild.channels.create(`Тикет: ${message.author.tag}`)
 
         const userId = message.author.id
     
         channel.setParent(process.env.SUPPORT_CATEGORY)
-        console.log(2)
+
         channel.updateOverwrite(message.guild.id, {
             SEND_MESSAGE: false,
             VIEW_CHANNEL: false,
@@ -20,7 +19,6 @@ module.exports = {
             SEND_MESSAGE: true,
             VIEW_CHANNEL: true,
         })
-        console.log(3)
         const reactionMessage = await channel.send({embed: {
             color: 10988550,
             title: "Запрос в поддержку",
@@ -47,7 +45,7 @@ module.exports = {
             ]
           }
         })
-        console.log(4)
+        
         try {
             await reactionMessage.react("✅")
             await reactionMessage.react("🔒")

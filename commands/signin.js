@@ -3,7 +3,7 @@ module.exports = {
     name: 'signin',
     aliases: [],
     permissions: [],
-    description: 'test server sign in functions',
+    description: 'server sign in functions',
     async execute(message, args, client, rcon) {
 
         const userId = message.author.id
@@ -67,7 +67,7 @@ module.exports = {
             switch (reaction.emoji.name) {
                 case "✅":
                     await rcon.connect()
-                    await rcon.send('whitelist add '+minecraftID).then(e => {
+                    await rcon.send('easywl add '+minecraftID).then(e => {
                         console.log(e)
                     })
                     rcon.end()
