@@ -1,28 +1,29 @@
 const profileModel = require('../models/profile')
 module.exports = {
-    name: 'getuser',
+    name: 'addcoins',
     aliases: [],
     permissions: [],
-    description: 'display user data',
-    async execute(message, args, client, rcon) {
-
-        const userId = message.author.id
+    description: 'add tester coins',
+    async execute(message, args, client, ) {
 
         const userID = args[0]
+        const coins = args[1]
+
+        if(!coins) {
+            message.reply('Что-то ты не то вводишь, отче, туда, но не то. Сколько сыпем то, ага?').then(msg => {
+                setTimeout(() => message.delete(), 5000);
+                setTimeout(() => msg.delete(), 5000);
+            })
+            return
+        }
 
         let profileData
         try {
-            profileData = await profileModel.findOne({minecraftID: userID})
+            profileData = await profileModel.findOneAndUpdate({minecraftID: userID},{$inc: {coins:coins}})
             if(profileData == null) {
-              profileData = await profileModel.findOne({discordID: userID})
+              profileData = await profileModel.findOneAndUpdate({discordID: userID},{$inc: {coins:coins}})
             }
             if(profileData) {
-                await rcon.connect()
-                let response = ''
-                await rcon.send('authme getip '+profileData.minecraftID).then(r => {response = r})
-                rcon.end()
-                let ipmask = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/g
-			          let t = response.match(ipmask)
                 message.reply({embed: {
                     color: 3447003,
                     title: "Пользователь "+profileData.minecraftID,
@@ -38,16 +39,8 @@ module.exports = {
                         value: profileData.minecraftID
                       },
                       {
-                        name: "💰 Tester Coins",
-                        value: profileData.coins
-                      },
-                      {
-                        name: "🖥️ Последний раз заходил с IP",
-                        value: "["+t[0]+"](https://whatismyipaddress.com/ip/"+t[0]+")"
-                      },
-                      {
-                        name: "🖥️ Зарегистрирован с IP",
-                        value: "["+t[1]+"](https://whatismyipaddress.com/ip/"+t[1]+")"
+                        name: "💰 Tester Coins (+"+coins+")",
+                        value: parseInt(profileData.coins)+parseInt(coins)
                       }
                     ]
                   }

@@ -52,6 +52,9 @@ client.on('message', message => {
         case 'getuser':
             message.channel.id == process.env.GM_CHANNEL ? client.commands.get('getuser').execute(message, args, client, rcon) : message.reply('Неверная команда.')
             break
+        case 'addcoins':
+            message.channel.id == process.env.GM_CHANNEL ? client.commands.get('addcoins').execute(message, args, client) : message.reply('Неверная команда.')
+            break
         default:
             message.channel.id == process.env.WELCOME_CHANNEL || message.channel.id == process.env.SUPPORT_CHANNEL ? message.delete() : ''
             break
