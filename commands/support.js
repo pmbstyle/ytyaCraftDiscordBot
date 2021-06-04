@@ -54,7 +54,6 @@ module.exports = {
             channel.send("Error sending emojis!")
             throw err;
         }
-        console.log(5)
         const collector = reactionMessage.createReactionCollector(
             (reaction, user) => message.guild.members.cache.find((member) => member.id === user.id).hasPermission("ADMINISTRATOR"),
             { dispose: true }

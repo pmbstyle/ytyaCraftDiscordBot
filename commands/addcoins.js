@@ -45,6 +45,8 @@ module.exports = {
                     ]
                   }
                 })
+                let userDiscordID = client.users.cache.find(u => u.tag === profileData.discordID).id
+                client.users.cache.get(userDiscordID).send(`Спасибо за помощь в тестировании.\nЗа вашу активность вам начислено ${coins} Tester Coins.\nВаш баланс можно узнать через команду !баланс.`)
                 return
             } else {
                 message.reply('Аккаунт с таким именем не зарегистрирован.').then(msg => {

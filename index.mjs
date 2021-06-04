@@ -29,6 +29,13 @@ client.on('ready', () => {
 
 client.on('message', message => {
     let userId = message.author.id
+    const args = message.content.slice(prefix.length).split(' ')
+    const command = args.shift().toLowerCase()
+
+    if(message.channel instanceof Discord.DMChannel && command != 'баланс') {
+        console.log('DM msg from '+message.author.tag+' with command '+command)
+        return
+    }
     if(message.channel.id == process.env.WELCOME_CHANNEL && !message.content.startsWith(prefix) && !message.author.bot && !message.guild.members.cache.find((member) => member.id === userId).hasPermission("ADMINISTRATOR")) {
         message.delete()
         return
@@ -38,9 +45,6 @@ client.on('message', message => {
         return
     }
     if(!message.content.startsWith(prefix) || message.author.bot) return;
-
-    const args = message.content.slice(prefix.length).split(' ')
-    const command = args.shift().toLowerCase()
 
     switch(command) {
         case 'заявка':
@@ -53,7 +57,7 @@ client.on('message', message => {
             message.channel.id == process.env.GM_CHANNEL ? client.commands.get('getuser').execute(message, args, client, rcon) : message.reply('Неверная команда.')
             break
         case 'addcoins':
-            message.channel.id == process.env.GM_CHANNEL ? client.commands.get('addcoins').execute(message, args, client) : message.reply('Неверная команда.')
+            message.guild.members.cache.find((member) => member.id === userId).hasPermission("ADMINISTRATOR") ? client.commands.get('addcoins').execute(message, args, client) : message.reply('Неверная команда.')
             break
         case 'баланс':
             client.commands.get('balance').execute(message)
