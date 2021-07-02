@@ -29,6 +29,9 @@ client.on('ready', () => {
 
 client.on('message', message => {
     let userId = message.author.id
+
+    if(!message.content.startsWith(prefix) || message.author.bot) return;
+
     const args = message.content.slice(prefix.length).split(' ')
     const command = args.shift().toLowerCase()
 
@@ -44,7 +47,6 @@ client.on('message', message => {
         message.delete()
         return
     }
-    if(!message.content.startsWith(prefix) || message.author.bot) return;
 
     switch(command) {
         case 'заявка':
