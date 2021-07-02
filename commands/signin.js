@@ -76,6 +76,7 @@ module.exports = {
                     message.member.roles.add(role)
                     let profile = await profileModel.create({
                         discordID:message.author.tag,
+                        discord_user_id:message.author.id,
                         minecraftID: minecraftID
                     })
                     profile.save()
