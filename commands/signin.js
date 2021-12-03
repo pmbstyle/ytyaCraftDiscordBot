@@ -40,15 +40,15 @@ module.exports = {
 
         const reactionMessage = await channel.send({embed: {
             color: 3447003,
-            title: "Заявка на подключение",
+            title: "Tester Sign Up Request",
             fields: [{
-                name: "Ник игрока",
+                name: "Nickname",
                 value: "```"+args[0]+"```"
               }
             ]
           }
         })
-        channel.send(`Спасибо, ваша заявка будет рассмотрена при первой возможности!\nЕсли у вас есть что добавить к заявке, вы можете это сделать в этом канале.`)
+        channel.send(`Thank you, your application will be reviewed as soon as possible! \nIf you have something to add to the application, you can do it in this channel.`)
 
         try {
             await reactionMessage.react("✅")
@@ -71,7 +71,7 @@ module.exports = {
                         console.log(e)
                     })
                     rcon.end()
-                    channel.send("Заявка принята.")
+                    channel.send("Application accepted.")
                     let role = message.member.guild.roles.cache.find(role => role.name === "Tester")
                     message.member.roles.add(role)
                     let profile = await profileModel.create({
@@ -80,21 +80,21 @@ module.exports = {
                         minecraftID: minecraftID
                     })
                     profile.save()
-                    client.users.cache.get(userId).send(`Ваша заявка на подключение к серверу ytyaCraft принята.\nВы можете подключиться прямо сейчас, ip: mc.ytyacraft.ru. Используйте ник из заявки.`)
-                    channel.send("Канал будет удален через 5 секунд!")
+                    client.users.cache.get(userId).send(`Your tester application has been approved.`)
+                    channel.send("The channel will be deleted in 5 seconds!")
                     setTimeout(() => channel.delete(), 5000)
                     break
                 case "⛔":
                     channel.send("Заявка отклонена.")
-                    client.users.cache.get(userId).send(`Ваша заявка на подключение к серверу ytyaCraft отклонена.`)
-                    channel.send("Канал будет удален через 5 секунд!")
+                    client.users.cache.get(userId).send(`Your tester application has been declined.`)
+                    channel.send("The channel will be deleted in 5 seconds!")
                     setTimeout(() => channel.delete(), 5000)
                     break
             }
         })
 
         message.channel
-            .send(`Заявка подана успешно! Подробнее: ${channel}`)
+            .send(`Application submitted successfully ! Please continue: ${channel}`)
             .then((msg) => {
                 setTimeout(() => msg.delete(), 7000);
                 setTimeout(() => message.delete(), 3000);

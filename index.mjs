@@ -35,7 +35,7 @@ client.on('message', message => {
     const args = message.content.slice(prefix.length).split(' ')
     const command = args.shift().toLowerCase()
 
-    if(message.channel instanceof Discord.DMChannel && command != 'баланс') {
+    if(message.channel instanceof Discord.DMChannel && command != 'balance') {
         console.log('DM msg from '+message.author.tag+' with command '+command)
         return
     }
@@ -49,19 +49,19 @@ client.on('message', message => {
     }
 
     switch(command) {
-        case 'заявка':
-            message.channel.id == process.env.WELCOME_CHANNEL ? client.commands.get('signin').execute(message, args, client, rcon) : message.reply('Неверная команда.')
+        case 'application':
+            message.channel.id == process.env.WELCOME_CHANNEL ? client.commands.get('signin').execute(message, args, client, rcon) : message.reply('Invalid command.')
             break
-        case 'поддержка':
-            message.channel.id == process.env.SUPPORT_CHANNEL ? client.commands.get('support').execute(message, client) : message.reply('Неверная команда.')
+        case 'support':
+            message.channel.id == process.env.SUPPORT_CHANNEL ? client.commands.get('support').execute(message, client) : message.reply('Invalid command.')
             break
         case 'getuser':
-            message.channel.id == process.env.GM_CHANNEL ? client.commands.get('getuser').execute(message, args, client, rcon) : message.reply('Неверная команда.')
+            message.channel.id == process.env.GM_CHANNEL ? client.commands.get('getuser').execute(message, args, client, rcon) : message.reply('Invalid command.')
             break
         case 'addcoins':
-            message.guild.members.cache.find((member) => member.id === userId).hasPermission("ADMINISTRATOR") ? client.commands.get('addcoins').execute(message, args, client) : message.reply('Неверная команда.')
+            message.guild.members.cache.find((member) => member.id === userId).hasPermission("ADMINISTRATOR") ? client.commands.get('addcoins').execute(message, args, client) : message.reply('Invalid command.')
             break
-        case 'баланс':
+        case 'balance':
             client.commands.get('balance').execute(message)
             break
         default:

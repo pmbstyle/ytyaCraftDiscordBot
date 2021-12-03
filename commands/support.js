@@ -4,7 +4,7 @@ module.exports = {
     permissions: [],
     description: 'server support functions',
     async execute(message, client) {
-        const channel = await message.guild.channels.create(`Тикет: ${message.author.tag}`)
+        const channel = await message.guild.channels.create(`Ticket: ${message.author.tag}`)
 
         const userId = message.author.id
     
@@ -21,26 +21,26 @@ module.exports = {
         })
         const reactionMessage = await channel.send({embed: {
             color: 10988550,
-            title: "Запрос в поддержку",
-            description: "Вы открыли запрос в поддержку. В этом канале вы можете изложить суть запроса. Начните с указания причины обращения.",
+            title: "Support request",
+            description: "You have opened a support request. In this channel, you can outline the essence of the request. Start by stating the reason for the request.",
             thumbnail: {
-                "url": "http://ytyacraft.ru/images/PNG-Server-Icon_RPG.png"
+                "url": "https://eternalrpg.com/logo-sm-square.png"
             },
             fields: [{
-                    name: "Предлагаемые причины",
-                    value: `- Я нашел баг\n- Я стал свидетелем нарушения правил\n- У меня есть предложение\n- Другое`
+                    name: "Suggested reasons",
+                    value: `- I found a bug \n- I witnessed the breaking of the rules \n- I have a suggestion \n- Other`
                 },
                 {
-                    name: "Как правильно изложить суть обращения",
-                    value: "Пожалуйста, излагайте только факты. Если ваше обращение связано с багом, то опишите как, где и при каких условиях баг был замечен. Если вы хотите пожаловаться на нарушение правил, то укажите ник нарушителя, что конкретно и когда произошло, добавьте координаты и скриншот, если требуется."
+                    name: "How to correctly state the essence of the request",
+                    value: "Please state only the facts. If your request is related to a bug, then describe how, where and under what conditions a bug was noticed. If you want to complain about a violation of the rules, then indicate the nickname of the offender, what exactly and when it happened, if required, add the coordinates and a screenshot."
                 },
                 {
-                    name: "Как все будет происходить?",
-                    value: "Администратор, либо другой оператор поддержки примет ваше обращение и задаст вопросы если требуется. После закрытия запроса этот канал будет автоматически удален."
+                    name: "What is the procedure?",
+                    value: "An administrator or another staff member will accept your request and ask questions if required. After closing a request, this channel will be automatically deleted."
                 },
                 {
-                    name: "Правила общения",
-                    value: "Команда ytyaCraft здесь что бы помочь и сделать вашу жизнь проще. Пожалуйста, воздержитесь от мата и иного рода вызывающего поведения. Нарушители будут удалены из дс навсегда."
+                    name: "Communication rules ",
+                    value: "Eternal Games team is here to help and make your life easier. Please refrain from obscenities and other defiant behavior. Violators will be permanently removed from our Discord server."
                 }
             ]
           }
@@ -62,26 +62,26 @@ module.exports = {
         collector.on("collect", (reaction, user) => {
             switch (reaction.emoji.name) {
                 case "✅":
-                    channel.send("Запрос обработан успешно.")
-                    client.users.cache.get(userId).send(`Ваша заявка в поддержку была успешно обработана.\nЗаявка закрыта.`)
-                    channel.send("Канал будет удален через 5 секунд!")
+                    channel.send("The request was processed successfully.")
+                    client.users.cache.get(userId).send(`Your support ticket has been processed successfully. \nTicket closed.`)
+                    channel.send("The channel will be deleted in 5 seconds!")
                     setTimeout(() => channel.delete(), 5000)
                     break
                 case "🔒":
-                    channel.send("Канал заблокирован, вы больше не можете отправлять сообщения.")
+                    channel.send("The channel is blocked, you can no longer send messages.")
                     channel.updateOverwrite(message.author, { SEND_MESSAGES: false });
                     break
                 case "⛔":
-                    channel.send("Запрос отклонен")
-                    client.users.cache.get(userId).send(`Ваш запрос в поддержку отклонен.`)
-                    channel.send("Канал будет удален через 5 секунд!")
+                    channel.send("Request rejected.")
+                    client.users.cache.get(userId).send(`Your ticket was rejected.`)
+                    channel.send("The channel will be deleted in 5 seconds!")
                     setTimeout(() => channel.delete(), 5000)
                     break
             }
         })
 
         message.channel
-            .send(`Запрос в поддержку подан успешно! Подробнее: ${channel}`)
+            .send(`Support request submitted successfully! Please continue: ${channel}`)
             .then((msg) => {
                 setTimeout(() => msg.delete(), 7000);
                 setTimeout(() => message.delete(), 3000);

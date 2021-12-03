@@ -28,7 +28,7 @@ module.exports = {
                     color: 3447003,
                     title: "Пользователь "+profileData.minecraftID,
                     thumbnail: {
-                      "url": "http://ytyacraft.ru/images/PNG-Server-Icon_RPG.png"
+                      "url": "https://eternalrpg.com/logo-sm-square.png"
                     },
                     fields: [{
                         name: "💬 Discrord ID",
@@ -46,7 +46,7 @@ module.exports = {
                   }
                 })
                 let userDiscordID = client.users.cache.find(u => u.tag === profileData.discordID).id
-                client.users.cache.get(userDiscordID).send(`Спасибо за помощь в тестировании.\nЗа вашу активность вам начислено ${coins} Tester Coins.\nВаш баланс можно узнать через команду !баланс.`)
+                client.users.cache.get(userDiscordID).send(`Спасибо за помощь в тестировании.\nЗа вашу активность вам начислено ${coins} Tester Coins.\nВаш баланс можно узнать через команду !balance.`)
                 return
             } else {
                 message.reply('Аккаунт с таким именем не зарегистрирован.').then(msg => {

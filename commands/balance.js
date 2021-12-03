@@ -14,9 +14,9 @@ module.exports = {
             if(profileData) {
                 message.reply({embed: {
                     color: 10988550,
-                    title: "Баланс "+profileData.discordID,
+                    title: "Balance "+profileData.discordID,
                     footer: {
-                        "text": "сообщение будет удалено через 10 секунд"
+                        "text": "message will be deleted in 10 seconds"
                     },
                     thumbnail: {
                       "url": "http://ytyacraft.ru/images/coins.png"
@@ -33,7 +33,7 @@ module.exports = {
                     setTimeout(() => msg.delete(), 10000);
                 })
             } else {
-                message.reply('Что-то пошло не так.').then(msg => {
+                message.reply('Something went wrong.').then(msg => {
                     setTimeout(() => message.delete(), 5000);
                     setTimeout(() => msg.delete(), 5000);
                 })
