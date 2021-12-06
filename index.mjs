@@ -53,7 +53,7 @@ client.on('message', message => {
             message.channel.id == process.env.WELCOME_CHANNEL ? client.commands.get('signin').execute(message, args, client, rcon) : message.reply('Invalid command.')
             break
         case 'support':
-            message.channel.id == process.env.SUPPORT_CHANNEL ? client.commands.get('support').execute(message, client) : message.reply('Invalid command.')
+            message.channel.id == process.env.SUPPORT_CHANNEL || message.channel.id == process.env.SUPPORT_CHANNEL2 ? client.commands.get('support').execute(message, client) : message.reply('Invalid command.')
             break
         case 'getuser':
             message.channel.id == process.env.GM_CHANNEL ? client.commands.get('getuser').execute(message, args, client, rcon) : message.reply('Invalid command.')
